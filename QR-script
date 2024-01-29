@@ -1,0 +1,61 @@
+import tkinter as tk
+
+from tkinter import filedialog           ## bu url' yi girdikten sonra QR kodunun nereye kayıt edilsin diye soru sormasına yarayan bir dosya dialogudur.
+## 'filedialog' sadece bu QR uygulaması için değil tkinter ile yaptıgımız bütün dosya kayıt işlemlerinde kullanılır!!!!
+
+import pyqrcode                ## bu 'pyqrcode' modülü herhangi bir url'yi 'QR' koduna ceviren bir modüldür
+
+      
+
+#fonksiyon olusturma
+def qr_kodu_olustur():
+    url=url_girdi.get()
+
+    if url:
+        qr_url=pyqrcode.create(url)
+        dosya_yolu=filedialog.asksaveasfilename(defaultextension=".svg",filetypes=[("SVG dosyaları","*.svg")])
+        if dosya_yolu:
+
+            qr_url.svg(dosya_yolu,scale=8)       ## ordaki 'scale' oluşturacağımız QR kodunun boyutunu temsil eder 8 'den küöük olmasın 8-12 arası iyidir 
+            durum_etiketi.config(text="QR kodunuz oluşturuldu ve kaydedildi...")
+#tasarım alanı                                           
+QR_UYGULAMA=tk.Tk()
+
+QR_UYGULAMA.title("QR uygulama alanına hoşgeldiniz")
+QR_UYGULAMA.geometry("357x130")
+
+
+
+
+etiket=tk.Label(QR_UYGULAMA,text="URL'yi girin:")
+
+url_girdi=tk.Entry(QR_UYGULAMA,width=40)             ##burdaki 'Entry'fonksiyonu kullanıcıdan girdi almaya yara aynı 'input()' fonksiyonu gibi,,
+qr_butonu=tk.Button(QR_UYGULAMA,text="QR kodu oluştur",command=qr_kodu_olustur)
+durum_etiketi=tk.Label(QR_UYGULAMA,text="")
+##NOT: yukarda yazdığımız etiketleri,butonları,girdi alanlarını uygulamamıza eklicek bir fonksiyon var o da pack() fonksiyonu ama bunu kullanmıcaz grid'i kullancaz biz !!!
+
+
+etiket.grid(row=0,column=0,padx=10,pady=10)
+url_girdi.grid(row=0,column=1,padx=10,pady=10)
+qr_butonu.grid(row=1,column=0,columnspan=2,padx=10,pady=10)
+durum_etiketi.grid(row=2,column=0,columnspan=2,padx=10,pady=10)
+
+
+
+
+
+
+
+QR_UYGULAMA.mainloop()
+
+
+
+
+
+
+
+
+
+
+
+
